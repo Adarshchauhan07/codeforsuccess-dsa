@@ -22,3 +22,11 @@
 9. Create an account, confirm the email, and sign in on every device with the same credentials.
 
 Never expose the Supabase service-role key.
+
+
+## Graph and JSON hierarchy views
+- Graph View renders live Pattern Family → Subpattern → Micro-pattern → Question branches.
+- Linked questions appear directly below every pattern node and open the same editable recall card.
+- Search, depth controls, expand/collapse, and editing are supported.
+- JSON Tree creates a live nested export with `children` and `questions` arrays.
+- A question linked to multiple patterns appears beneath every linked pattern while remaining one canonical question record.
