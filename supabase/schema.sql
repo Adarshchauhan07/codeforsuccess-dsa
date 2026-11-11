@@ -1,0 +1,12 @@
+create table if not exists public.dsa_workspaces (user_id uuid primary key references auth.users(id) on delete cascade, payload jsonb not null default '{}'::jsonb, updated_at timestamptz not null default now());
+alter table public.dsa_workspaces enable row level security;
+grant select, insert, update, delete on public.dsa_workspaces to authenticated;
+drop policy if exists "workspace_owner_select" on public.dsa_workspaces;
+drop policy if exists "workspace_owner_insert" on public.dsa_workspaces;
+drop policy if exists "workspace_owner_update" on public.dsa_workspaces;
+drop policy if exists "workspace_owner_delete" on public.dsa_workspaces;
+create policy "workspace_owner_select" on public.dsa_workspaces for select to authenticated using ((select auth.uid()) = user_id);
+create policy "workspace_owner_insert" on public.dsa_workspaces for insert to authenticated with check ((select auth.uid()) = user_id);
+create policy "workspace_owner_update" on public.dsa_workspaces for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "workspace_owner_delete" on public.dsa_workspaces for delete to authenticated using ((select auth.uid()) = user_id);
+create index if not exists dsa_workspaces_updated_at_idx on public.dsa_workspaces(updated_at desc);
