@@ -47,3 +47,23 @@ This package is an in-place update of the previous Final Graph release. It keeps
 
 ### Existing GitHub deployment update
 Replace only `app.js`, `style.css`, and `README.md` in the existing GitHub repository. Do not overwrite `seed.js`, do not rerun `supabase/schema.sql`, and do not change the Vercel environment variables. Commit the three changed files; Vercel will deploy the update while the existing Supabase payload remains intact.
+
+## Cytoscape.js final graph canvas update
+This is an in-place upgrade of the previous GitHub project. Existing Supabase data, users, RLS policies, question links, progress, notes, and environment variables remain compatible.
+
+### Interactive canvas
+- Pan, wheel/pinch zoom, node dragging, touch gestures, box selection
+- Hierarchy/Dagre, Tree/Breadthfirst, Free/CoSE, Radial/Concentric, Circle, and Grid layouts
+- Search and animated focus
+- Fit, center selection, full-screen, and PNG export
+- Click a node to highlight its closed neighborhood and fade unrelated nodes
+- Double-click or right-click to open the existing pattern/question editor
+- Inspector for counts, pattern notes, direct questions, and all patterns connected to a question
+- Isolate a selected pattern branch or one question and all of its pattern paths
+- One canonical question node with multiple pattern edges
+
+### Performance
+The app sends only active nodes and active edges to Cytoscape. Branch/question isolation reduces large graphs before layout. Layout animation is disabled above 450 nodes; straight/haystack edges and simple selectors reduce canvas cost.
+
+### GitHub update
+Replace the repository contents with this package, or at minimum replace/add: `app.js`, `style.css`, `index.html`, `main.js`, `package.json`, and `tests/`. Keep `seed.js`, `api/config.js`, and the Supabase project. In Vercel switch Framework Preset to Vite (or let Vercel detect it), Build Command `npm run build`, Output Directory `dist`, Install Command `npm install`. Existing `SUPABASE_URL` and `SUPABASE_ANON_KEY` remain unchanged. No SQL rerun is required.
