@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';
+const normalizeTitle=v=>String(v||'').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,' ').trim();
+function repair(db){let used=new Set(),next=1,changed=false;for(const q of db.questions){q.patternIds=[...new Set(q.patternIds||[])];let n=Number(q.questionNumber);if(!n||used.has(n)){while(used.has(next))next++;q.questionNumber=next++;changed=true}else{used.add(n);next=Math.max(next,n+1)}}let map=new Map(),out=[];for(const q of db.questions){let k=normalizeTitle(q.title);if(!map.has(k)){map.set(k,q);out.push(q)}else{let keep=map.get(k);keep.patternIds=[...new Set([...keep.patternIds,...q.patternIds])];keep.status=keep.status==='solved'||q.status==='solved'?'solved':keep.status;changed=true}}db.questions=out;return changed}
+let db={questions:[{id:'a',title:'Two Sum',patternIds:['p1'],questionNumber:1,status:'learning'},{id:'b',title:' two-sum ',patternIds:['p2','p1'],questionNumber:1,status:'solved'},{id:'c',title:'3Sum',patternIds:['p3'],status:'learning'}]};
+assert.equal(repair(db),true);assert.equal(db.questions.length,2);assert.deepEqual(db.questions[0].patternIds.sort(),['p1','p2']);assert.equal(db.questions[0].status,'solved');assert.equal(new Set(db.questions.map(q=>q.questionNumber)).size,2);assert.ok(db.questions.every(q=>q.questionNumber>0));
+let q=db.questions[0];q.patternIds=[...new Set([...q.patternIds,'p3'])];assert.equal(q.patternIds.length,3);q.patternIds=[...new Set([...q.patternIds,'p3'])];assert.equal(q.patternIds.length,3);
+assert.equal(normalizeTitle('Kth-Largest Element!'),'kth largest element');
+console.log('PASS v4: duplicate merge, unioned links, stable unique numbers, idempotent linking, title normalization');

@@ -67,3 +67,14 @@ The app sends only active nodes and active edges to Cytoscape. Branch/question i
 
 ### GitHub update
 Replace the repository contents with this package, or at minimum replace/add: `app.js`, `style.css`, `index.html`, `main.js`, `package.json`, and `tests/`. Keep `seed.js`, `api/config.js`, and the Supabase project. In Vercel switch Framework Preset to Vite (or let Vercel detect it), Build Command `npm run build`, Output Directory `dist`, Install Command `npm install`. Existing `SUPABASE_URL` and `SUPABASE_ANON_KEY` remain unchanged. No SQL rerun is required.
+
+## v4 canonical-question update
+This release fixes duplicated questions without changing Supabase:
+- Existing duplicate titles are merged automatically on login. Their pattern links are combined into one canonical question.
+- Every question receives a stable `Q-00001` style number if it did not already have one.
+- Creating a question with an existing normalized title links selected patterns to the canonical question instead of creating another record.
+- Open any pattern and choose **Link existing by ID**. Enter `Q-00012`, the internal ID, or the exact title.
+- Open a question to see all connected pattern chips, then jump directly to its question-centered Cytoscape graph.
+
+### Deploy this update
+Replace the files in the existing GitHub repository with this package and commit. Keep the same Supabase project, SQL, users, and Vercel variables. In Vercel, use Vite with `npm run build` and `dist`. If the UI does not show the `v4.0` badge after deployment, Vercel is serving an old deployment or the repository root is wrong.
