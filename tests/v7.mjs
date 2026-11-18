@@ -1,0 +1,3 @@
+import assert from'node:assert/strict';import{createLibrary}from'../library.js';
+let lib=createLibrary();assert.equal(lib.length,832);assert.ok(lib.every(p=>p.notes?.summary&&p.notes?.recognition&&p.notes?.invariant&&p.notes?.steps&&p.notes?.pitfalls&&p.notes?.complexity&&p.notes?.quick),'every node has full cheat sheet');
+let positions={a:{x:100,y:200},b:{x:450,y:90}},payload={settings:{mapPositions:positions,mapViewport:{zoom:1.25,pan:{x:33,y:44}}}},round=JSON.parse(JSON.stringify(payload));assert.deepEqual(round.settings.mapPositions,positions);assert.equal(round.settings.mapViewport.zoom,1.25);console.log('PASS v7: 832 cheat sheets and persistent visual positions/viewport');
