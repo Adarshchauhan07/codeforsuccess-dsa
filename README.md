@@ -1,31 +1,31 @@
-# DSA Sheet Studio v20
+# DSA Sheet Studio v21
 
-GitHub-only replacement. It keeps the existing Supabase project, `dsa_workspaces` table, Supabase login, RLS, environment variables and Vercel project.
+GitHub-only update. No Supabase, SQL, RLS, authentication, environment-variable or Vercel-project changes.
 
 ## Reference Bank
-- Fixed user-supplied order
-- Family IDs `F-01...`
-- Pattern IDs `P-001...`
-- Canonical question IDs `Q-0001...`
-- Search, difficulty filter, expand/collapse, Copy ID and Add to Sheet
-- Same question is one canonical bank record even when linked to several patterns
+- Fixed supplied order and IDs
+- Search, difficulty filter, expand/collapse, Add by ID
+- Personal quick-revision notes and external links on bank patterns/questions
 
-## Custom Sheet Studio
-- Several named sheets
-- Add family/pattern/question by ID
-- Add custom family, sub-pattern or question
-- Edit, reparent and cascade-delete with confirmation
-- Drag nodes freely while unlocked
-- Permanent node positions, zoom and pan
-- Parent-specific color palettes
-- Sticky, Cards, Outline and Glass saved style setting
-- Duplicate, rename and delete sheets
-- Confirmed Undo and Redo
-- PNG export
+## Custom Sheets, now book-style
+Custom sheets no longer use a mind-map canvas. They use the same family → pattern → question expandable book/list structure as the Reference Bank.
+
+- Multiple named sheets
+- Add by F/P/Q ID or create custom items
+- Edit, reparent, cascade-delete
+- Move items up/down
+- HTML drag-and-drop onto another family/pattern
+- Expand/collapse all and search
+- Comfortable/compact density saved per sheet
+- Notes and link on every custom family, pattern and question
+- Supports OneNote, OneDrive, Google Docs, Notion and normal HTTPS links
+- Confirmed Undo/Redo
 - Every popup has ×, Cancel, outside-click and Escape close
 
-## Important dataset scope
-This build intentionally includes only the consistent content supplied in the conversation: 16 families, 98 named patterns and the 209 canonical questions that had explicit mappings. Missing/contradictory tail rows were not invented.
+## Responsive UI
+- Desktop: three-column bank/sheet, content and inspector layout
+- Tablet: narrower three-column layout with compact controls
+- Phone: horizontal action ribbon, full-width reference/custom book, sticky search and bottom-safe popup actions
 
 ## Deploy
-Replace the existing GitHub repository contents with this folder, commit and push. Keep Vercel as Vite (`npm install`, `npm run build`, output `dist`). Do not change Supabase.
+Replace the current GitHub repository contents with this folder, commit, and push. Continue using the existing Vercel and Supabase setup.

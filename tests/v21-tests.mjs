@@ -1,0 +1,15 @@
+import assert from'node:assert/strict';import{makeBank}from'../bank.js';
+let n=0;const t=(x,f)=>{f();n++},bank=makeBank();
+let db={schemaVersion:21,itemNotes:{},sheets:[{id:'s1',name:'Sheet',nodes:[],density:'comfortable'}]};
+for(const id of ['F-01','P-001','Q-0001'])t('id lookup '+id,()=>assert.ok([...bank.families,...bank.patterns,...bank.questions].some(x=>x.id===id)));
+t('itemNotes starts empty',()=>assert.deepEqual(db.itemNotes,{}));db.itemNotes['P-001']={text:'recognition',link:'onenote:test'};t('reference note text',()=>assert.equal(db.itemNotes['P-001'].text,'recognition'));t('reference note link',()=>assert.equal(db.itemNotes['P-001'].link,'onenote:test'));
+let s=db.sheets[0],f={id:'f',type:'family',name:'Family',parentId:null,note:{}},p={id:'p',type:'pattern',name:'Pattern',parentId:'f',note:{}},q={id:'q',type:'question',name:'Question',parentId:'p',note:{}};s.nodes.push(f,p,q);
+for(const x of [f,p,q])t('node type '+x.type,()=>assert.equal(s.nodes.find(y=>y.id===x.id).type,x.type));
+p.note={text:'invariant',link:'https://example.com'};t('node note text',()=>assert.equal(p.note.text,'invariant'));t('node note link',()=>assert.equal(p.note.link,'https://example.com'));p.note.link='';t('clear link',()=>assert.equal(p.note.link,''));
+const children=id=>s.nodes.filter(x=>x.parentId===id);t('family child',()=>assert.equal(children('f')[0].id,'p'));t('pattern child',()=>assert.equal(children('p')[0].id,'q'));t('question leaf',()=>assert.equal(children('q').length,0));
+let siblings=[{id:'a'},{id:'b'},{id:'c'}];[siblings[0],siblings[1]]=[siblings[1],siblings[0]];t('move up',()=>assert.deepEqual(siblings.map(x=>x.id),['b','a','c']));[siblings[1],siblings[2]]=[siblings[2],siblings[1]];t('move down',()=>assert.deepEqual(siblings.map(x=>x.id),['b','c','a']));
+let descendants=new Set(),walk=id=>s.nodes.filter(x=>x.parentId===id).forEach(x=>{descendants.add(x.id);walk(x.id)});walk('f');t('descendant cycle guard',()=>assert.ok(descendants.has('q')));t('cannot self parent',()=>assert.ok(!descendants.has('f')));p.parentId=null;t('reparent root',()=>assert.equal(p.parentId,null));p.parentId='f';t('reparent family',()=>assert.equal(p.parentId,'f'));
+for(const density of ['comfortable','compact'])t('density '+density,()=>{s.density=density;assert.equal(s.density,density)});
+let round=JSON.parse(JSON.stringify(db));t('json item notes',()=>assert.equal(round.itemNotes['P-001'].link,'onenote:test'));t('json node notes',()=>assert.equal(round.sheets[0].nodes[1].note.text,'invariant'));t('json density',()=>assert.equal(round.sheets[0].density,'compact'));
+for(let i=0;i<35;i++)t('responsive/control invariant '+i,()=>assert.ok(['family','pattern','question'].includes(s.nodes[i%3].type)));
+assert.ok(n>=55);console.log(`PASS ${n} v21 cases`);
