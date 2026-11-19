@@ -1,22 +1,31 @@
-# MindCanvas v9 with OneNote Live Notes
+# MindCanvas v10 Final: Connected Notes
 
-GitHub update for the existing CODEFORSUCCESS deployment.
+GitHub-only upgrade. Keep the existing Supabase project, `dsa_workspaces` table, RLS, login, users, environment variables, and Vercel project.
 
-## Existing services unchanged
-- Same Supabase project and `dsa_workspaces` JSON payload
-- Same Supabase authentication and RLS
-- Same Vercel project and Supabase environment variables
+## OneNote without Entra
+Use OneNote's **Copy Link to Paragraph** or page link, then paste the link into a Connected Note. Add a concise snapshot and optional code snippet so revision content is visible inside MindCanvas. Clicking the link opens the OneNote source. This is intentionally snapshot-based; no Microsoft Graph or Entra permission is required.
 
-## New OneNote functionality
-- Read-only Microsoft OneNote connection through delegated Microsoft Graph `Notes.Read`
-- Browse 50 recently modified OneNote pages
-- Select exact headings, paragraphs, list items, and table cells
-- Connect selected OneNote blocks to a pattern or canonical question
-- Several OneNote selections per entity
-- The same OneNote page can supply different blocks to different questions
-- Cached note text remains visible between refreshes
-- Manual refresh retrieves current content
-- Open the source page in OneNote
-- Disconnecting does not modify OneNote
+## Connected Notes features
+- Notes on patterns and canonical questions
+- Exact OneNote paragraph/page URL
+- Revision snapshot and code snippet
+- One reusable note linked to several patterns/questions
+- Edit links, link elsewhere, unlink one entity, or delete globally
+- Searchable note library from the left toolbar
+- Existing JSON payload migration adds `connectedNotes: []`
 
-Follow `SETUP_ONENOTE.md`. A Microsoft Entra SPA registration is required; no client secret is used.
+## Popup and safety behavior
+- Every new popup has a visible × button
+- Cancel buttons close forms
+- Click outside the popup to close
+- Escape closes any popup
+- Deleting or disconnecting requires confirmation
+- Deleting a connected note globally shows the number of affected links
+
+## Deploy
+1. Export the current JSON backup.
+2. Replace the existing GitHub repository contents with this folder's contents.
+3. Commit and push.
+4. Do not change Supabase or Vercel settings.
+5. Keep Vercel on Vite: `npm install`, `npm run build`, output `dist`.
+6. Confirm the UI shows **MindCanvas v10** and the left toolbar shows **📘 Notes**.

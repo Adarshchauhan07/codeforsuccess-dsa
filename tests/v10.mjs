@@ -1,0 +1,4 @@
+import assert from'node:assert/strict';
+let db={connectedNotes:[],patterns:[{id:'p1'},{id:'p2'}],questions:[{id:'q1'}]};
+let note={id:'n1',title:'Window template',url:'onenote:test',snapshot:'Expand and shrink',code:'while (...)',links:[{type:'pattern',id:'p1'},{type:'question',id:'q1'}]};db.connectedNotes.push(note);
+assert.equal(db.connectedNotes.length,1);assert.equal(note.links.length,2);note.links.push({type:'pattern',id:'p2'});assert.equal(note.links.length,3);note.links=note.links.filter(x=>!(x.type==='pattern'&&x.id==='p1'));assert.equal(note.links.length,2);let round=JSON.parse(JSON.stringify(db));assert.equal(round.connectedNotes[0].url,'onenote:test');assert.equal(round.connectedNotes[0].code,'while (...)');db.connectedNotes=db.connectedNotes.filter(x=>x.id!=='n1');assert.equal(db.connectedNotes.length,0);console.log('PASS v10: reusable links, selective unlink, snapshots, URLs, code and global delete');
