@@ -1,24 +1,70 @@
-# DSA OS v22
+# UCPBBPOT Forced Decision Tree Module
 
-A GitHub-only replacement using the existing Supabase `dsa_workspaces.payload`, login, RLS, environment variables and Vercel project.
+Drop-in, framework-free ES module for your DSA project.
 
-## Core modules
-- Knowledge Bank with 19 seeded primary families
-- LeetCode-style fully customizable Question Bank
-- Pattern Recognition Engine: Structure → Objective → Property → Candidate → Validation
-- Expandable Decision Tree
-- Custom Kanban Sheet with drag/drop status columns
-- Analytics
-- Full appearance settings
+## Files
+- `decision-tree.js`: all forced Yes/No nodes and validated leaves
+- `decision-tree-component.js`: UI, traversal, backtracking, persistence and JSON export
+- `decision-tree.css`: responsive PC/tablet/phone styling
+- `demo.html`: working standalone demo
 
-## No forced hierarchy
-Pattern, sub-pattern, micro-pattern and question are independent cards. Use tags, custom sheets and classifications instead of mandatory parent-child relationships.
+## Run the demo
+Because this uses ES modules, serve the folder instead of opening `demo.html` with `file://`.
 
-## Each card supports
-Type, title, emoji, any color, difficulty, status, tags, revision notes, external OneNote/OneDrive/Google Docs/Notion link, code and manual ordering.
+```bash
+npx vite --host 0.0.0.0
+```
 
-## Safety
-Undo/Redo require confirmation. Delete requires confirmation. Popups support ×, Cancel, outside click and Escape.
+Then open the local URL and navigate to `/demo.html`.
 
-## Responsive
-Desktop sidebar, tablet compact sidebar and mobile bottom navigation are included.
+## Add to an existing Vite project
+Copy the three module files into `src/decision-tree/`, then:
+
+```html
+<div id="decisionTree"></div>
+```
+
+```js
+import './decision-tree/decision-tree.css';
+import { UCPBBPOTDecisionTree } from './decision-tree/decision-tree-component.js';
+
+new UCPBBPOTDecisionTree('#decisionTree', {
+  storageKey: 'my-dsa-recognition-attempts',
+  onComplete(record) {
+    // Put this record inside your existing dsa_workspaces payload.
+    workspace.recognitionAttempts ??= [];
+    workspace.recognitionAttempts.push(record);
+    saveWorkspace(workspace);
+  }
+});
+```
+
+## Integrate with existing Supabase JSON payload
+No SQL or table change is required. Store records under:
+
+```json
+{
+  "recognitionAttempts": [],
+  "questions": []
+}
+```
+
+Use `record.analysis.title` to connect manually, or add your canonical `questionId` before saving:
+
+```js
+onComplete(record) {
+  record.questionId = activeQuestion.id;
+  workspace.recognitionAttempts.push(record);
+  saveWorkspace(workspace);
+}
+```
+
+## Forced learning behavior
+- All eight UCPBBPOT fields are mandatory by default.
+- Pattern names remain hidden until a validated leaf.
+- Every gate has Yes and No only.
+- Every No descends to another factual gate or another family.
+- Back undoes exactly one gate.
+- The final record contains the complete path, result, data structure, why-to-choose, invariant, safe operation, and tests.
+
+Set `requireAnalysis:false` only for development/testing, not normal learning mode.
