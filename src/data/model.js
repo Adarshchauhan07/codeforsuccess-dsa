@@ -1,0 +1,7 @@
+import{makeBank}from'./courseBank.js';
+export const BANK=makeBank();
+export const DAY=86400000;
+export function fresh(){return{version:5,activeQuestionId:null,questions:BANK.questions.map((q,i)=>({...q,status:'Unseen',archived:false,course:true,tags:[],notes:'',links:[],mastery:{recognition:0,derivation:0,implementation:0,transfer:0},nextReview:null,attemptIds:[],order:i})),patterns:BANK.patterns.map((p,i)=>({...p,active:true,emoji:'🧩',color:['#7c3aed','#2563eb','#059669','#ea580c'][i%4],chooseWhen:'',rejectWhen:'',invariant:'',dataStructures:[],mastery:0})),families:BANK.families.map((f,i)=>({...f,active:true,color:['#7c3aed','#2563eb','#059669','#ea580c'][i%4]})),attempts:[],revisions:[],transferSessions:[],settings:{theme:'midnight'},cloud:{lastSync:null}}}
+export function migrate(x){let d=x&&x.version?x:fresh(),base=fresh();d={...base,...d};for(const q of d.questions){q.mastery={recognition:0,derivation:0,implementation:0,transfer:0,...q.mastery};q.attemptIds??=[];q.links??=[];q.tags??=[]}return d}
+export function schedule(question,rating){let days=rating<=1?1:rating===2?3:rating===3?7:rating===4?14:30;question.nextReview=Date.now()+days*DAY;question.status=rating>=4?'Strong':rating>=2?'Learning':'Weak';return question.nextReview}
+export function patternMastery(db,pid){let qs=db.questions.filter(q=>q.patternIds?.includes(pid)&&!q.archived);if(!qs.length)return 0;return Math.round(qs.reduce((s,q)=>s+Object.values(q.mastery).reduce((a,b)=>a+b,0)/20,0)/qs.length*100)}

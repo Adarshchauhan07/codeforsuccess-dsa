@@ -1,63 +1,62 @@
-# DSA OS · Milestone 1
+# DSA Learning OS - Final Integrated Project
 
-A complete GitHub-ready Vite project focused on one reliable learning loop:
-
-`Raw question → UCPBBPOT → forced Yes/No tree → pattern → data structure → invariant → saved attempt`
+GitHub/Vercel-ready Vite app implementing Milestones 1-5.
 
 ## Included
-- Responsive dashboard for desktop, tablet, and phone
-- Five raw sample questions with no pattern tags
-- Mandatory UCPBBPOT workspace
-- Forced 113-node Yes/No decision tree with 54 validated leaves
-- One-step backtracking
-- Full reasoning-trail history
-- Leaf result with family, pattern, supporting data structure, why-to-choose, and invariant
-- User-entered safe operation, complexity, and tests
-- LocalStorage persistence
-- Attempt history and detail drawer
-- JSON backup import/export
-- GitHub and Vercel configuration
-- Automated structural tests
+- UCPBBPOT forced 113-node Yes/No decision tree with 54 validated leaves
+- Canonical course Question Bank and Pattern Library imported from the previous sheet
+- Many-to-many Pattern ↔ Question linking by stable IDs
+- Recognition-record history and mastery scoring across recognition, derivation, implementation, and transfer
+- Today dashboard with pattern coverage and due reviews
+- Local-first persistence, JSON import/export
+- Optional Supabase email auth and cloud sync using one JSON workspace row
+- Spaced revision intervals: 1, 3, 7, 14, or 30 days based on self-rating
+- Transfer Training with random blind questions
+- Analytics for question coverage, pattern coverage, family mastery, and frequently failed decision gates
+- Editable pattern choose/reject/invariant/data-structure fields
+- Notes and external note link on each question
+- Responsive desktop, tablet and phone UI
 
-## Run locally
-
+## Local setup
 ```bash
 npm install
+npm test
 npm run dev
 ```
 
-Open the URL shown by Vite, normally `http://localhost:5173`.
+## Local-only mode
+No configuration is required. Data is stored under browser key `dsa-os-final`.
 
-## Test and build
+## Supabase cloud mode
+1. Create or reuse a Supabase project.
+2. Run `supabase.sql` in the SQL Editor. If `dsa_workspaces` already exists with `user_id`, `payload`, and `updated_at`, do not recreate it; ensure equivalent own-row RLS policies exist.
+3. Copy `.env.example` to `.env` and enter the project URL and anon key.
+4. Enable Email authentication in Supabase Authentication.
+5. Restart Vite or redeploy Vercel.
 
-```bash
-npm test
-npm run build
-```
-
-## Replace an existing GitHub repository
-
-1. Back up the current repository.
-2. Copy this project's contents into the repository root.
-3. Run `npm install`, `npm test`, and `npm run build`.
-4. Commit and push.
-
-```bash
-git add .
-git commit -m "Deploy DSA OS Milestone 1"
-git push origin main
+Cloud environment variables:
+```text
+VITE_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY
 ```
 
 ## Vercel
-- Framework preset: Vite
-- Build command: `npm run build`
-- Output directory: `dist`
-- Install command: `npm install`
+- Framework: Vite
+- Install: `npm install`
+- Build: `npm run build`
+- Output: `dist`
+- Add both Supabase environment variables if cloud mode is required
 
-No environment variables are required for Milestone 1.
+## Replace an existing GitHub repository
+Back up the repository and export application data first. Copy the contents of this folder into the repository root, then:
+```bash
+npm install
+npm test
+npm run build
+git add .
+git commit -m "Deploy integrated DSA Learning OS"
+git push origin main
+```
 
-## Storage
-All user data is stored in browser LocalStorage under `dsa-os-m1`. Export a JSON backup before clearing browser storage or switching devices.
-
-## Intentional scope
-This milestone does not include the full 209-question bank, course pattern library, Supabase, login, spaced revision, or deep analytics. It provides the functioning core learning engine those modules will later use.
+## Data model
+One workspace payload stores families, patterns, canonical questions, recognition attempts, revision records, transfer sessions, settings, and cloud metadata. Stable IDs preserve history when course placement changes.
