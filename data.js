@@ -1,0 +1,18 @@
+export const FAMILIES=['Two Pointers','Sliding Window','Prefix Sum & Difference','Hashing','Array & Matrix Manipulation','Cyclic Sort & Index Mapping','Linked List','Tree Traversal','Graph Traversal','Stack & Monotonic Structures','Heap / Priority Queue','Binary Search','Greedy','Backtracking','Dynamic Programming','String Manipulation','Bit Manipulation','Trie & Design','Segment Tree & Fenwick Tree'];
+export const EMOJIS=['🧠','🎯','⚡','🧩','🔍','📚','💡','🚀','🛠️','📌','✅','🔥','🌳','🔗','📝','🏆','🧪','📈','🧭','💻'];
+export const COLORS=['#7c3aed','#2563eb','#0891b2','#059669','#ca8a04','#ea580c','#dc2626','#db2777','#9333ea','#475569','#0f766e','#4f46e5'];
+export const STRUCTURES=['Array / String','Linked List','Tree','Graph / Grid','Intervals / Events','Number / Bits'];
+export const OBJECTIVES=['Existence / Search','Count','Maximum / Minimum','Longest / Shortest','Top K / Kth','All combinations','Range queries','Rearrangement'];
+export const PROPERTIES=['Sorted order / monotonicity','Contiguous region / window validity','Cumulative sum / repeated prefix state','Frequency / membership / complement','Bounded value-to-index relationship','Repeated choices / overlapping subproblems','Connectivity / reachability / dependencies','Next greater or smaller element'];
+export const RULES=[
+{structure:'Array / String',objective:'Longest / Shortest',property:'Contiguous region / window validity',family:'Sliding Window',pattern:'Variable Size Window',validation:'Validity must be repairable by moving the left boundary.'},
+{structure:'Array / String',objective:'Count',property:'Cumulative sum / repeated prefix state',family:'Prefix Sum & Difference',pattern:'Exact K / Frequency',validation:'A prefix difference or repeated remainder must derive the answer.'},
+{structure:'Array / String',objective:'Existence / Search',property:'Sorted order / monotonicity',family:'Binary Search',pattern:'Sorted Array Search',validation:'The search predicate must discard a complete half safely.'},
+{structure:'Array / String',objective:'Rearrangement',property:'Sorted order / monotonicity',family:'Two Pointers',pattern:'Converging / Read & Write',validation:'Pointer movement must eliminate candidates or compact safely.'},
+{structure:'Graph / Grid',objective:'Longest / Shortest',property:'Connectivity / reachability / dependencies',family:'Graph Traversal',pattern:'BFS / Dijkstra',validation:'Use BFS for equal edge cost; Dijkstra only for non-negative weights.'},
+{structure:'Tree',objective:'Existence / Search',property:'Connectivity / reachability / dependencies',family:'Tree Traversal',pattern:'DFS / BFS / LCA',validation:'Choose traversal order from whether depth, level, or ancestry matters.'},
+{structure:'Array / String',objective:'All combinations',property:'Repeated choices / overlapping subproblems',family:'Backtracking',pattern:'Choice → recurse → undo',validation:'Need all candidates, with pruning of invalid partial states.'},
+{structure:'Array / String',objective:'Maximum / Minimum',property:'Repeated choices / overlapping subproblems',family:'Dynamic Programming',pattern:'State / transition DP',validation:'Overlapping states and a recurrence must exist.'},
+{structure:'Intervals / Events',objective:'Maximum / Minimum',property:'Sorted order / monotonicity',family:'Greedy',pattern:'Sort + safe local choice',validation:'An exchange argument must justify the local decision.'},
+{structure:'Number / Bits',objective:'Existence / Search',property:'Bounded value-to-index relationship',family:'Bit Manipulation',pattern:'XOR / masks',validation:'Bit representation must directly expose the required property.'}
+];
