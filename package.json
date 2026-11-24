@@ -1,18 +1,1 @@
-{
-  "name": "dsa-learning-os-final",
-  "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0",
-    "test": "node tests/tree.test.mjs && node tests/storage.test.mjs"
-  },
-  "devDependencies": {
-    "vite": "^6.1.0"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.49.0"
-  }
-}
+{"name":"dsa-os-manual-learning-tree","private":true,"version":"2.0.0","type":"module","scripts":{"dev":"vite --host 0.0.0.0","build":"vite build","preview":"vite preview --host 0.0.0.0","test":"node tests.mjs"},"dependencies":{"@supabase/supabase-js":"^2.49.0"},"devDependencies":{"vite":"^6.1.0"}}
