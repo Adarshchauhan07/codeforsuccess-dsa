@@ -1,70 +1,63 @@
-# UCPBBPOT Forced Decision Tree Module
+# DSA OS · Milestone 1
 
-Drop-in, framework-free ES module for your DSA project.
+A complete GitHub-ready Vite project focused on one reliable learning loop:
 
-## Files
-- `decision-tree.js`: all forced Yes/No nodes and validated leaves
-- `decision-tree-component.js`: UI, traversal, backtracking, persistence and JSON export
-- `decision-tree.css`: responsive PC/tablet/phone styling
-- `demo.html`: working standalone demo
+`Raw question → UCPBBPOT → forced Yes/No tree → pattern → data structure → invariant → saved attempt`
 
-## Run the demo
-Because this uses ES modules, serve the folder instead of opening `demo.html` with `file://`.
+## Included
+- Responsive dashboard for desktop, tablet, and phone
+- Five raw sample questions with no pattern tags
+- Mandatory UCPBBPOT workspace
+- Forced 113-node Yes/No decision tree with 54 validated leaves
+- One-step backtracking
+- Full reasoning-trail history
+- Leaf result with family, pattern, supporting data structure, why-to-choose, and invariant
+- User-entered safe operation, complexity, and tests
+- LocalStorage persistence
+- Attempt history and detail drawer
+- JSON backup import/export
+- GitHub and Vercel configuration
+- Automated structural tests
+
+## Run locally
 
 ```bash
-npx vite --host 0.0.0.0
+npm install
+npm run dev
 ```
 
-Then open the local URL and navigate to `/demo.html`.
+Open the URL shown by Vite, normally `http://localhost:5173`.
 
-## Add to an existing Vite project
-Copy the three module files into `src/decision-tree/`, then:
+## Test and build
 
-```html
-<div id="decisionTree"></div>
+```bash
+npm test
+npm run build
 ```
 
-```js
-import './decision-tree/decision-tree.css';
-import { UCPBBPOTDecisionTree } from './decision-tree/decision-tree-component.js';
+## Replace an existing GitHub repository
 
-new UCPBBPOTDecisionTree('#decisionTree', {
-  storageKey: 'my-dsa-recognition-attempts',
-  onComplete(record) {
-    // Put this record inside your existing dsa_workspaces payload.
-    workspace.recognitionAttempts ??= [];
-    workspace.recognitionAttempts.push(record);
-    saveWorkspace(workspace);
-  }
-});
+1. Back up the current repository.
+2. Copy this project's contents into the repository root.
+3. Run `npm install`, `npm test`, and `npm run build`.
+4. Commit and push.
+
+```bash
+git add .
+git commit -m "Deploy DSA OS Milestone 1"
+git push origin main
 ```
 
-## Integrate with existing Supabase JSON payload
-No SQL or table change is required. Store records under:
+## Vercel
+- Framework preset: Vite
+- Build command: `npm run build`
+- Output directory: `dist`
+- Install command: `npm install`
 
-```json
-{
-  "recognitionAttempts": [],
-  "questions": []
-}
-```
+No environment variables are required for Milestone 1.
 
-Use `record.analysis.title` to connect manually, or add your canonical `questionId` before saving:
+## Storage
+All user data is stored in browser LocalStorage under `dsa-os-m1`. Export a JSON backup before clearing browser storage or switching devices.
 
-```js
-onComplete(record) {
-  record.questionId = activeQuestion.id;
-  workspace.recognitionAttempts.push(record);
-  saveWorkspace(workspace);
-}
-```
-
-## Forced learning behavior
-- All eight UCPBBPOT fields are mandatory by default.
-- Pattern names remain hidden until a validated leaf.
-- Every gate has Yes and No only.
-- Every No descends to another factual gate or another family.
-- Back undoes exactly one gate.
-- The final record contains the complete path, result, data structure, why-to-choose, invariant, safe operation, and tests.
-
-Set `requireAnalysis:false` only for development/testing, not normal learning mode.
+## Intentional scope
+This milestone does not include the full 209-question bank, course pattern library, Supabase, login, spaced revision, or deep analytics. It provides the functioning core learning engine those modules will later use.
